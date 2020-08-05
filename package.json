@@ -1,0 +1,28 @@
+{
+  "name": "employee_tracker",
+  "version": "1.0.0",
+  "description": "To architect and build a solution for managing a company's employees using node, inquirer, and MySQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js, node start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miao0007/employee_tracker.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mysql"
+  ],
+  "author": "Jeff Miao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miao0007/employee_tracker/issues"
+  },
+  "homepage": "https://github.com/miao0007/employee_tracker#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
