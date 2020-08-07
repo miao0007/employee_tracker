@@ -38,6 +38,10 @@ function start() {
             case "Add Employee":
                 addEmployee();
                 break;
+
+                case "View All Employees":
+                    viewAllEmployee();
+                    break;
         }
     })
 }
@@ -77,4 +81,14 @@ function addEmployee() {
            }
        );
    }) 
+
+}
+
+function viewAllEmployee(){
+    connection.query("SELECT employee.first_name, employee.last_name, role.title AS \"role\", manager.first_name AS \"manager\" FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN employee manager ON employee.manager_id = manager.id GROUP By employee.id",
+    function(err, res){
+        if (err) throw err;
+        console.table(res);
+        start();
+    });
 }
