@@ -42,6 +42,10 @@ function start() {
                 case "View All Employees":
                     viewAllEmployee();
                     break;
+
+                    case "Remove Employee":
+                        removeEmployee();
+                        break;
         }
     })
 }
@@ -91,4 +95,29 @@ function viewAllEmployee(){
         console.table(res);
         start();
     });
+}
+
+function removeEmployee(){
+let employees = [];
+connection.query("SELECT employee.first_name, employee.last_name FROM employee", (err,res)=> {
+    for (let i = 0; i < res.length; i++){
+        employees.push(res[i].first_name + " " + res[i].last_name);
+    }
+    inquirer.prompt([
+        {
+            type:"list",
+            name:"employee",
+            message:"Select a employee you want to delete. ",
+            choices:employees
+        },
+    ]).then(res =>{
+        const query = connection.query(`DELETE FROM employee WHERE concat(first_name, ' ' , last_name) = '${res.employee}'`,
+        function(err,res){
+            if (err) throw err;
+            console.log("Employee deleted!\n");
+            start();
+
+        });
+    });
+});
 }
