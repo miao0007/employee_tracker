@@ -33,8 +33,48 @@ function start() {
                 "Exit"
             ]
         }
-    ]).then(function(res){
-        
+    ]).then(function(answer){
+        switch(answer.action){
+            case "Add Employee":
+                addEmployee();
+                break;
+        }
     })
 }
 
+function addEmployee() {
+   console.log("Please input a new employee.\n");
+   inquirer.prompt([
+       {
+           type:"input",
+           name:"first_name",
+           message: "Enter the first name ? "
+       },
+       {
+           type: "input",
+           name: "last_name",
+           message: "Enter the last name ? "
+       },
+       {
+          type: "list",
+          name: "role_id",
+          message: "Enter the employee's role id",
+          choices: [1,2,3,4,5] 
+
+       },
+       {
+           type: "input",
+           name: "manager_id",
+           message: "Employee's manager id?"
+       }
+   ]). then(function(answer){
+       const query = connection.query(
+           "INSERT INTO employee SET ?", answer,
+           function(err, res) {
+               if (err) throw err;
+               console.log( "Employee added successfully!\n");
+               start();
+           }
+       );
+   }) 
+}
