@@ -13,6 +13,28 @@ const connection = mysql.createConnection({
 connection.connect(function(err){
     if(err) throw err;
     console.log("connection as id " + connection.threadId + "\n");
-    // start();
+    start();
 });
+
+function start() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "action",
+            message: "What would you like to do? ",
+            choices: [
+                "Add Employee",
+                "View All Employees",
+                "Remove Employee",
+                "Add department",
+                "Add Roles",
+                "View All Roles",
+                "Update Employee Role",
+                "Exit"
+            ]
+        }
+    ]).then(function(res){
+        
+    })
+}
 
