@@ -177,3 +177,48 @@ function viewAllDepartment(){
         start();
     })
 }
+
+function addRoles() {
+    let department = [];
+connection.query("SELECT * FROM department", function(err,res){
+    if(err) throw err;
+    for (let i =0; i < res.length; i++){
+        res[i].first_name + " " + res[i].last_name
+        department.push({name: res[i].name, value: res[i].id});
+
+    }
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What role would you want to add? "
+        },
+        {
+            type: "input",
+            name:"salary",
+            message: " Set a salary for this role: "
+        },
+        {
+            type:"input",
+            name:"department",
+            message:"Select department: ",
+            choices: department
+        }
+    ]).then(function(answer){
+        console.log(answer);
+        const query = connection.query("INSERT INTO role SET ?",{title:answer.title,salary:answer.salary,department_id: answer.department},
+            function(err,res){
+                if(err) throw err;
+                start();
+            })
+    })
+})
+}
+
+function viewAllRoles() {
+    connection.query("SELECT role.*, department.name FROM role LEFT JOIN department ON department.id = role.department_id", function(error,result){
+        if(error) throw error;
+        console.table(result);
+        start();
+    })
+}
