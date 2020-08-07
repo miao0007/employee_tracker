@@ -222,3 +222,32 @@ function viewAllRoles() {
         start();
     })
 }
+
+function updateEmployeeRole(){
+    let employee = [];
+    connection.query("SELECT first_name, last_name, id FROM employee", function(err,res){
+        for(let i = 0; i < res.length; i++){
+            employee.push(res[i].first_name + " " + res[i].last_name);
+        }
+        inquirer.prompt([
+            {
+                type: "list",
+                name:"employee_name",
+                message: "Which employee's role you want to update? ",
+                choices: employee
+            },
+            {
+                type: "input",
+                name: "role",
+                message: "Input the new role"
+
+            }
+        ]).then(function(answer){
+            connection.query(`UPDATE employee SET role_id = ${answer.role} WHERE id = ${answer.employee_name}`,
+            function(err,res){
+                console.log(res);
+                start();
+            });
+        })
+    })
+}
