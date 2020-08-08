@@ -51,12 +51,12 @@ Email: miao188@hotmail.com
 
 ## Deployed Video Link
 
-https://drive.google.com/file/d/1lhG-Z7Vljebt4cZBZi50eNckJ-ADZPjc/view?usp=sharing
+https://drive.google.com/file/d/1aj5GXVN9Q82Cjl7j-szodr5UfaCE0ysg/view?usp=sharing
 
 ## Test Preview
 
-![Alt test preview](./Assets/input2.png)
+![Alt test preview](./assets/images/start.png)
 
-![Alt test preview](./Assets/output.png)
+![Alt test preview](./assets/images/employee.png)
 
-![Alt Team_Template_Engine](./Assets/teamPage.png)
+
