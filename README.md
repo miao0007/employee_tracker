@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/badge/license-MIT-blue)
 
-# Team Template Engine
+# Employee Tracker
 
 ## Description
 
