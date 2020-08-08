@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "mypassword",
+  password: "huanXI861109",
   database: "employee_trackerDB",
 });
 
@@ -240,36 +240,64 @@ function viewAllRoles() {
 }
 
 function updateEmployeeRole() {
-  let employee = [];
-  connection.query("SELECT first_name, last_name, id FROM employee", function (
-    err,
-    res
-  ) {
-    for (let i = 0; i < res.length; i++) {
-      employee.push(res[i].first_name + " " + res[i].last_name);
+  connection.query("SELECT last_name FROM employee", function (err, res) {
+    console.table(res);
+
+    var lastName = [];
+    for (var i = 0; i < res.length; i++) {
+      lastName.push(res[i].last_name);
     }
-    inquirer
-      .prompt([
+
+    connection.query("SELECT title FROM role", function (err, res) {
+
+      var employeeTitle = [];
+      for (let i = 0; i < res.length; i++) {
+        employeeTitle.push(res[i].title);
+      }
+
+      inquirer.prompt([
         {
+          name: "last_name",
           type: "list",
-          name: "employee_name",
-          message: "Which employee's role you want to update? ",
-          choices: employee,
+          message: "Enter the last name of the employee you want to update",
+          choices: lastName
+
         },
         {
-          type: "input",
-          name: "role",
-          message: "Input the new role",
-        },
+          name: "new_role",
+          type: "list",
+          message: "What new role would you want to give this employee?",
+          choices: employeeTitle
+        }
+
       ])
-      .then(function (answer) {
-        connection.query(
-          `UPDATE employee SET role_id = ${answer.role} WHERE id = ${answer.employee_name}`,
-          function (err, res) {
-            console.log(res);
-            start();
-          }
-        );
-      });
-  });
+        .then(function (answer) {
+
+          connection.query("SELECT id FROM role WHERE title = ?",
+            [answer.new_role],
+
+            function (err, res) {
+              console.log('ID of selected role', res, res[0].id, answer.last_name);
+              if (err) throw err;
+              connection.query("UPDATE employee SET ? WHERE ?",
+              [
+                {
+                  role_id: res[0].id
+                },
+                {
+                  last_name: answer.last_name
+                }
+              ], function (error, res) {
+                  if (error){
+                    console.log('Something Wrong', error)
+                    throw err;
+                  }
+                  start();
+                })
+            })
+        })
+    })
+  })
 }
+
+
